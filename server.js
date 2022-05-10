@@ -9,14 +9,16 @@ const register = require('./controllers/register');
 const profile = require('./controllers/profile');
 const image = require('./controllers/image');
 
-const { response } = require('express');
-const { user } = require('pg/lib/defaults');
-const res = require('express/lib/response');
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED =0
+
+// const { response } = require('express');
+// const { user } = require('pg/lib/defaults');
+// const res = require('express/lib/response');
 
 const db = knex ({
    client: 'pg',
    connection: {
-     host : '127.0.0.1',
+     host : 'postgresql-round-21063',
      user : 'henglyaun',
      password : '',
      database : 'smart-brain'
@@ -24,14 +26,11 @@ const db = knex ({
  });
 
 const app = express();
-app.use(cors());
 
+app.use(cors());
 app.use(bodyParser.json());
 
-app.get('/', (req, res)=>{
-   res.send('Hello, from App.get');
-})
-
+app.get('/', (req, res)=>{res. send('Hello, from App.get') })
 app.post('/signin', (req, res) => { signin.handleSignin(db, bcrypt)(req, res) })
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
 app.get('/profile/:id', (req,res) => { profile.handleProfileGet(req, res, db) })
